@@ -14,7 +14,7 @@ class category(models.Model):
     def __str__(self): category;
 
 class Subscription(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(user, on_delete=models.CASCADE)
     plan = models.CharField(max_length=100)
     expires_at = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
