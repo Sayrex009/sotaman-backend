@@ -14,7 +14,7 @@ class announcement(models.Model):
     def __str__(self): announcement;
 
 class AIGeneration(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(user, on_delete=models.CASCADE)
 
     listing = models.ForeignKey(announcement, on_delete=models.CASCADE)
 
