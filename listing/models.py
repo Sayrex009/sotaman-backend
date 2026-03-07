@@ -1,5 +1,5 @@
 from django.db import models
-from app.models import User
+from app.models import user
 
 class announcement(models.Model):
     title = models.CharField(max_length=100)

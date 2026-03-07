@@ -1,11 +1,11 @@
 from django.db import models
 
-class User(models.Model):
+class user(models.Model):
     username = models.CharField(max_length=100)
     password = models.CharField(max_length=100)
     email = models.EmailField()
     is_authenticated = models.BooleanField(default=False)
-    def __str__(self): User;
+    def __str__(self): user;
 
 
 class category(models.Model):
