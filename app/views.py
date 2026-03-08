@@ -5,6 +5,8 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from app.models import Advertisement
+from .serializers import AdvertisementSerializer
 from .utils import send_otp_email, generate_otp
 
 User = get_user_model()
@@ -102,3 +104,9 @@ class LoginAPI(APIView):
             "access": str(refresh.access_token),
             "refresh": str(refresh)
         })
+
+class AdvertisementListAPI(APIView):
+    def get(self, request):
+        ads = Advertisement.objects.all()
+        serializer = AdvertisementSerializer(ads, many=True)
+        return Response(serializer.data)

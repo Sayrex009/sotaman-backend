@@ -47,3 +47,7 @@ class Subscription(models.Model):
 
     def __str__(self):
         return f"{self.user.phone_number} - {self.plan}"
+
+class Advertisement(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    img = models.ImageField(upload_to='ads/')
