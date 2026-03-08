@@ -1,6 +1,6 @@
-Sotaman Backend
+Zomera Backend
 
-Sotaman Backend is the core API service for the Sotaman platform, designed to provide a reliable, secure, and scalable foundation for the entire system.
+Zomera Backend is the core API service for the Sotaman platform, designed to provide a reliable, secure, and scalable foundation for the entire system.
 
 🌟 Project Overview
 
