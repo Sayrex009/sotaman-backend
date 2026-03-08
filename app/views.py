@@ -4,11 +4,11 @@ from rest_framework import status
 from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from app.models import Advertisement, User, UserManager
-from .serializers import AdvertisementSerializer
+from app.models import *
+from .serializers import *
 from .utils import send_otp_email, generate_otp
 from app.services.otp import generate_otp, send_otp_email, save_otp, verify_otp
-from listing.models import announcement, AIGeneration
+from listing.models import *
 User = get_user_model()
 
 class RegisterEmailAPI(APIView):
@@ -93,3 +93,19 @@ class AnnouncementListAPI(APIView):
 
         serializer = AdvertisementSerializer(ad)
         return Response(serializer.data)
+     
+class FavoriteListAPI(APIView):
+       def post(self, request):
+        user = request.user
+        product_id = request.data.get("product_id")
+
+        try:
+            product = announcement.objects.get(id=product_id)
+        except announcement.DoesNotExist:
+            return Response({"error": "Mahsulot topilmadi"}, status=status.HTTP_404_NOT_FOUND)
+
+        favorite, created = Favorite.objects.get_or_create(user=user, product=product)
+        if not created:
+            favorite.delete()
+            return Response({"message": "Sevimlilardan o'chirildi"}, status=status.HTTP_200_OK)
+        return Response({"message": "Sevimlilarga qo'shildi"}, status=status.HTTP_201_CREATED)
