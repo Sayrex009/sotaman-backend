@@ -4,7 +4,7 @@ from django.db import models
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
-            raise ValueError("Email обязателен")
+            raise ValueError('Email required')
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -23,13 +23,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
-
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
     def __str__(self):
         return self.email
-
 
 class Category(models.Model):
     title = models.CharField(max_length=100)
@@ -38,16 +36,14 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
-
-class Subscription(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    plan = models.CharField(max_length=100)
-    expires_at = models.DateTimeField()
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.user.phone_number} - {self.plan}"
-
 class Advertisement(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     img = models.ImageField(upload_to='ads/')
+
+class EmailOTP(models.Model):
+    email = models.EmailField()
+    code = models.CharField(max_length=6)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.email
