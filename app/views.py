@@ -8,7 +8,7 @@ from app.models import Advertisement, User, UserManager
 from .serializers import AdvertisementSerializer
 from .utils import send_otp_email, generate_otp
 from app.services.otp import generate_otp, send_otp_email, save_otp, verify_otp
-
+from listing.models import announcement, AIGeneration
 User = get_user_model()
 
 class RegisterEmailAPI(APIView):
@@ -79,4 +79,17 @@ class AdvertisementListAPI(APIView):
     def get(self, request):
         ads = Advertisement.objects.all()
         serializer = AdvertisementSerializer(ads, many=True)
+        return Response(serializer.data)
+    
+class AnnouncementListAPI(APIView):
+     def get(self, request, pk):
+        try:
+            ad = announcement.objects.get(id=pk)
+        except announcement.DoesNotExist:
+            return Response({"error": "Объявление не найдено"}, status=status.HTTP_404_NOT_FOUND)
+
+        ad.views += 1
+        ad.save()
+
+        serializer = AdvertisementSerializer(ad)
         return Response(serializer.data)

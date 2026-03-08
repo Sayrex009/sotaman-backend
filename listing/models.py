@@ -11,6 +11,8 @@ class announcement(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     area = models.IntegerField()
+    views = models.IntegerField(default=0)
+    img = models.ImageField(upload_to='images/')
     rooms = models.IntegerField()
     category = models.ManyToManyField(Category, related_name='announcements') 
     def __str__(self):

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from app.views import LoginAPI, RegisterEmailAPI, VerifyEmailOTPAPI, AdvertisementListAPI
+from app.views import LoginAPI, RegisterEmailAPI, VerifyEmailOTPAPI, AdvertisementListAPI, AnnouncementListAPI
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
@@ -22,6 +22,7 @@ urlpatterns = [
     path("api/verify/", VerifyEmailOTPAPI.as_view()),
     path("api/login/", LoginAPI.as_view()),
     path('admin/', admin.site.urls),
+    path('api/announcements/<int:pk>/', AnnouncementListAPI.as_view(), name='announcement-detail'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/ads/', AdvertisementListAPI.as_view(), name='advertisement-list'),
