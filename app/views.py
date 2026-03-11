@@ -14,10 +14,6 @@ User = get_user_model()
 
 
 class RegisterEmailAPI(APIView):
-    """
-    Шаг 1: Принимаем Email и Пароль, отправляем OTP.
-    Данные сохраняются во фронтенде (React), а не в сессии.
-    """
     def post(self, request):
         email = request.data.get("email")
         password = request.data.get("password")
@@ -39,10 +35,6 @@ class RegisterEmailAPI(APIView):
 
 
 class VerifyEmailOTPAPI(APIView):
-    """
-    Шаг 2: Проверяем OTP и создаем пользователя.
-    Ожидает: email, password, code (otp).
-    """
     def post(self, request):
         otp = request.data.get("code")
         email = request.data.get("email")
