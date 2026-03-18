@@ -5,6 +5,9 @@ class UserManager(BaseUserManager):
     def create_user(self, email, password=None, **extra_fields):
         if not email:
             raise ValueError('Email required')
+        
+        extra_fields.setdefault('ai_credits', 2) 
+        
         email = self.normalize_email(email)
         user = self.model(email=email, **extra_fields)
         user.set_password(password)
@@ -21,6 +24,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+    
+    ai_credits = models.IntegerField(default=0, verbose_name="Кредиты для ИИ")
 
     objects = UserManager()
     USERNAME_FIELD = 'email'
@@ -28,7 +33,6 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
-
 class Category(models.Model):
     title = models.CharField(max_length=100)
     img = models.ImageField(upload_to='images/')
